@@ -22,6 +22,8 @@ namespace MvcMusicStore.Controllers
         Genres = genres
       };
 
+      ViewBag.Starred = new List<string> {"Rock", "Jazz"};
+
       return this.View(viewModel);
     }
 

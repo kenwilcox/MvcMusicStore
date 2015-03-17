@@ -10,44 +10,48 @@ namespace MvcMusicStore.Controllers
 {
   public class StoreController : Controller
   {
+    private MusicStoreEntities storeDB = new MusicStoreEntities();
+
     public ActionResult Index()
     {
       // Create a list of genres
-      var genres = new List<string> {"Rock", "Jazz", "Country", "Pop", "Disco"};
+      //var genres = new List<string> {"Rock", "Jazz", "Country", "Pop", "Disco"};
+      var genres = this.storeDB.Genres;
 
-      // Create our view model
-      var viewModel = new StoreIndexViewModel
-      {
-        NumberOfGenres = genres.Count(),
-        Genres = genres
-      };
+      //// Create our view model
+      //var viewModel = new StoreIndexViewModel
+      //{
+      //  NumberOfGenres = genres.Count(),
+      //  Genres = genres
+      //};
 
-      ViewBag.Starred = new List<string> {"Rock", "Jazz"};
+      //ViewBag.Starred = new List<string> {"Rock", "Jazz"};
 
-      return this.View(viewModel);
+      return this.View(genres);
     }
 
     // GET: /Store/Browse?genre=Disco
     public ActionResult Browse(string genre)
     {
-      var generModel = new Genre
+      var genreModel = new Genre
       {
-        Name = genre
+        Name = genre,
+        Albums = this.storeDB.Albums.ToList()
       };
 
-      var albums = new List<Album>()
-      {
-        new Album() {Title = genre + " Album 1"},
-        new Album() {Title = genre + " Album 2"}
-      };
+      //var albums = new List<Album>()
+      //{
+      //  new Album() {Title = genre + " Album 1"},
+      //  new Album() {Title = genre + " Album 2"}
+      //};
 
-      var viewModel = new StoreBrowseViewModel()
-      {
-        Genre = generModel,
-        Albums = albums
-      };
+      //var viewModel = new StoreBrowseViewModel()
+      //{
+      //  Genre = genreModel,
+      //  Albums = albums
+      //};
 
-      return this.View(viewModel);
+      return this.View(genreModel);
     }
 
     // GET: /Store/Details/5
@@ -56,6 +60,15 @@ namespace MvcMusicStore.Controllers
       var album = new Album {Title = "Sample Album"};
 
       return this.View(album);
+    }
+
+    // GET: /Store/GenreMenu
+    [ChildActionOnly]
+    public ActionResult GenreMenu()
+    {
+      var genres = this.storeDB.Genres.Take(9).ToList();
+
+      return this.PartialView(genres);
     }
   }
 }

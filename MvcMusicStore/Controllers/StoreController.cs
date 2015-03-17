@@ -13,14 +13,18 @@ namespace MvcMusicStore.Controllers
       return "Hello from Store.Index()";
     }
 
-    public string Browse()
+    // GET: /Store/Browse?genre=Disco
+    public string Browse(string genre)
     {
-      return "Hello from Store.Browse()";
+      string message = HttpUtility.HtmlEncode("Store.Browse, Genre = " + genre);
+      return message;
     }
 
-    public string Details()
+    // GET: /Store/Details/5
+    public string Details(int id)
     {
-      return "Hello from Store.Details()";
+      string message = "Store.Details, ID = " + id;
+      return message;
     }
   }
 }

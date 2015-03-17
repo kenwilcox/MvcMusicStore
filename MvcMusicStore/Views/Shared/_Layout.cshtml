@@ -1,9 +1,10 @@
 ﻿<!doctype html>
-<html>
+<html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width" />
   <title>@ViewBag.Title</title>
+  <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
   @Styles.Render("~/Content/css")
   @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -24,6 +25,7 @@
     </div>
   </header>
   <div id="body">
+    @{Html.RenderAction("GenreMenu", "Store");}
     @RenderSection("featured", required: false)
     <section class="content-wrapper main-content clear-fix">
       @RenderBody()
